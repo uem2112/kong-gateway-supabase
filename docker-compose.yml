@@ -38,8 +38,8 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=coolify"
 
-      # HTTP Router für API Gateway
-      - "traefik.http.routers.kong-gateway.rule=Host(`${GATEWAY_DOMAIN:-api.example.com}`)"
+      # HTTP Router für API Gateway (Phase 1: Test-Domain api-v2)
+      - "traefik.http.routers.kong-gateway.rule=Host(`api-v2.baucircle-beratung.de`)"
       - "traefik.http.routers.kong-gateway.entrypoints=http,https"
       - "traefik.http.routers.kong-gateway.tls=true"
       - "traefik.http.routers.kong-gateway.tls.certresolver=letsencrypt"
