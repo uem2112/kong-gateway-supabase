@@ -24,10 +24,10 @@ services:
     volumes:
       - ./kong.yml:/kong/declarative/kong.yml:ro
 
-    # Port binding (nur auf localhost, nicht öffentlich)
-    ports:
-      - "127.0.0.1:8000:8000"
-      - "127.0.0.1:8001:8001"
+    # Port binding - Commented out for Coolify (Traefik handles routing)
+    # ports:
+    #   - "127.0.0.1:8000:8000"
+    #   - "127.0.0.1:8001:8001"
 
     # Networks - WICHTIG: Muss im coolify Network sein!
     networks:
