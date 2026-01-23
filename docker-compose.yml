@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  kong-gateway:
+    image: kong:3.5-alpine
+    container_name: supabase-kong-gateway
+    restart: unless-stopped
+
+    environment:
+      # Kong Configuration
+      - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/kong/declarative/kong.yml
+
+      # Logging
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+
+      # Listeners
+      - KONG_ADMIN_LISTEN=127.0.0.1:8001
+      - KONG_PROXY_LISTEN=0.0.0.0:8000
+
+    volumes:
+      - ./kong.yml:/kong/declarative/kong.yml:ro
+
+    # Port binding (nur auf localhost, nicht öffentlich)
+    ports:
+      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:8001:8001"
+
+    # Networks - WICHTIG: Muss im coolify Network sein!
+    networks:
+      - coolify
+
+    # Traefik Labels für Coolify Integration
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=coolify"
+
+      # HTTP Router für API Gateway
+      - "traefik.http.routers.kong-gateway.rule=Host(`${GATEWAY_DOMAIN:-api.example.com}`)"
+      - "traefik.http.routers.kong-gateway.entrypoints=http,https"
+      - "traefik.http.routers.kong-gateway.tls=true"
+      - "traefik.http.routers.kong-gateway.tls.certresolver=letsencrypt"
+
+      # Service (Port mapping zu Kong Proxy)
+      - "traefik.http.services.kong-gateway.loadbalancer.server.port=8000"
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+networks:
+  coolify:
+    external: true

@@ -1,0 +1,106 @@
+_format_version: "3.0"
+_transform: true
+
+# ============================================================================
+# Kong Routing Configuration for Supabase Services
+# ============================================================================
+#
+# WICHTIG: Ersetze die Container-Namen mit deinen echten Supabase Container-Namen!
+#
+# Finde deine Container-Namen:
+#   docker ps --format "table {{.Names}}\t{{.Ports}}" | grep -E "(rest|auth|storage)"
+#
+# ============================================================================
+
+services:
+  # PostgREST Service - REST API für Postgres
+  - name: postgrest-service
+    url: http://rest-YOUR-PROJECT-ID:3000
+    routes:
+      - name: postgrest-route
+        paths:
+          - /rest/v1
+        strip_path: true        # ✅ WICHTIG: PostgREST erwartet / nicht /rest/v1
+        preserve_host: false
+
+  # GoTrue Service - Auth/User Management
+  - name: gotrue-service
+    url: http://auth-YOUR-PROJECT-ID:8081
+    routes:
+      - name: gotrue-route
+        paths:
+          - /auth/v1
+        strip_path: true        # ✅ WICHTIG: GoTrue erwartet / nicht /auth/v1
+        preserve_host: false
+
+  # Storage Service - File Storage
+  - name: storage-service
+    url: http://storage-YOUR-PROJECT-ID:5000
+    routes:
+      - name: storage-route
+        paths:
+          - /storage/v1
+        strip_path: false       # ❌ NICHT strippen: Storage erwartet /storage/v1
+        preserve_host: false
+
+  # Optional: Realtime Service (falls vorhanden)
+  # Aktiviere diese Zeilen wenn du Realtime nutzt
+  # - name: realtime-service
+  #   url: http://realtime-YOUR-PROJECT-ID:4000
+  #   routes:
+  #     - name: realtime-route
+  #       paths:
+  #         - /realtime/v1
+  #       strip_path: false
+  #       preserve_host: false
+
+  # Optional: Edge Functions (falls vorhanden)
+  # Aktiviere diese Zeilen wenn du Edge Functions nutzt
+  # - name: functions-service
+  #   url: http://functions-YOUR-PROJECT-ID:9000
+  #   routes:
+  #     - name: functions-route
+  #       paths:
+  #         - /functions/v1
+  #       strip_path: false
+  #       preserve_host: false
+
+# ============================================================================
+# Global CORS Plugin
+# ============================================================================
+plugins:
+  - name: cors
+    config:
+      # WICHTIG: Füge hier deine Frontend/App Domains hinzu!
+      origins:
+        - "https://your-domain.com"
+        - "https://app.your-domain.com"
+        - "http://localhost:3000"
+        - "http://localhost:5173"
+      credentials: true
+      exposed_headers:
+        - X-Auth-Token
+        - Authorization
+        - Content-Type
+        - Content-Length
+        - Content-Range
+      headers:
+        - Accept
+        - Accept-Version
+        - Authorization
+        - Content-Length
+        - Content-MD5
+        - Content-Type
+        - Date
+        - X-Auth-Token
+        - apikey
+        - x-client-info
+      methods:
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+        - OPTIONS
+      max_age: 3600
+      preflight_continue: false
