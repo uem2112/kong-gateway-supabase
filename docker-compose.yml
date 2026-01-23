@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   kong-gateway:
-    image: kong:3.5-alpine
+    image: kong:3.5.0-alpine
     container_name: supabase-kong-gateway
     restart: unless-stopped
 
