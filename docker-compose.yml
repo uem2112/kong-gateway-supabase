@@ -24,16 +24,13 @@ services:
     volumes:
       - ./kong.yml:/kong/declarative/kong.yml:ro
 
-    # Port binding - Commented out for Coolify (Traefik handles routing)
-    # ports:
-    #   - "127.0.0.1:8000:8000"
-    #   - "127.0.0.1:8001:8001"
-
-    # Networks - WICHTIG: Muss im coolify Network sein!
+    # Networks - WICHTIG:
+    # 1) coolify => damit Traefik/Konfiguration von Coolify greift
+    # 2) sowwgwwc84coccwcwokwk8ss_default => damit Kong den Supabase "rest" Container per DNS findet
     networks:
       - coolify
+      - sowwgwwc84coccwcwokwk8ss_default
 
-    # Traefik Labels für Coolify Integration
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=coolify"
@@ -47,7 +44,6 @@ services:
       # Service (Port mapping zu Kong Proxy)
       - "traefik.http.services.kong-gateway.loadbalancer.server.port=8000"
 
-    # Health check
     healthcheck:
       test: ["CMD", "kong", "health"]
       interval: 10s
@@ -57,4 +53,6 @@ services:
 
 networks:
   coolify:
+    external: true
+  sowwgwwc84coccwcwokwk8ss_default:
     external: true
