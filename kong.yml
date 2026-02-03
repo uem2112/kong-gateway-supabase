@@ -40,7 +40,7 @@ services:
         preserve_host: false
 
   - name: kaltakquise-backend-service
-    url: http://kaltakquise-backend-c80448wcs0ssgwso0wokw000-3350
+    url: http://kaltakquise-backend-c80448wcs0ssgwso0wokw000-214920375559:3350
     routes:
       - name: kaltakquise-backend-route
         paths:
