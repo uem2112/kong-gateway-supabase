@@ -1,4 +1,3 @@
-# Schritt 1: neue Kong Config erstellen
 cat > /tmp/kong-new.yml << 'EOF'
 _format_version: "3.0"
 _transform: true
@@ -88,10 +87,3 @@ plugins:
       max_age: 3600
       preflight_continue: false
 EOF
-
-# Schritt 2: Datei in Container kopieren und Kong neu laden
-docker cp /tmp/kong-new.yml kong-gateway-xwso8w0og4o84088ssgwo8ww-225951275232:/kong/declarative/kong.yml
-docker exec kong-gateway-xwso8w0og4o84088ssgwo8ww-225951275232 kong reload
-
-# Schritt 3: testen
-curl https://api.baucircle-beratung.de/kaltakquise/health
