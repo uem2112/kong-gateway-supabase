@@ -87,3 +87,10 @@ plugins:
       max_age: 3600
       preflight_continue: false
 EOF
+
+# In Container kopieren & neu laden
+docker cp /tmp/kong-new.yml kong-gateway-xwso8w0og4o84088ssgwo8ww-231100618600:/kong/declarative/kong.yml
+docker exec kong-gateway-xwso8w0og4o84088ssgwo8ww-231100618600 kong reload
+
+# Testen
+curl https://api.baucircle-beratung.de/kaltakquise/health
