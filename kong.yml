@@ -44,7 +44,7 @@ services:
 
   # Kaltakquise Backend Service - Lead Management & Outbound
   - name: kaltakquise-backend-service
-    url: http://kaltakquise-backend:3350
+    url: http://kaltakquise-backend-c80448wcs0ssgwso0wokw000-214920375559:3350
     routes:
       - name: kaltakquise-backend-route
         paths:
