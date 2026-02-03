@@ -1,3 +1,6 @@
+#!/bin/bash
+
+# 1️⃣ Konfiguration erstellen
 cat > /tmp/kong-new.yml << 'EOF'
 _format_version: "3.0"
 _transform: true
@@ -88,9 +91,16 @@ plugins:
       preflight_continue: false
 EOF
 
-# In Container kopieren & neu laden
-docker cp /tmp/kong-new.yml kong-gateway-xwso8w0og4o84088ssgwo8ww-231100618600:/kong/declarative/kong.yml
-docker exec kong-gateway-xwso8w0og4o84088ssgwo8ww-231100618600 kong reload
+# 2️⃣ Config in Container kopieren (neuen Kong-Containernamen anpassen)
+CONTAINER_NAME="kong-gateway-xwso8w0og4o84088ssgwo8ww-231100618600"
 
-# Testen
+docker cp /tmp/kong-new.yml $CONTAINER_NAME:/kong/declarative/kong-temp.yml
+
+# 3️⃣ In Container verschieben und ersetzen
+docker exec -it $CONTAINER_NAME bash -c "mv /kong/declarative/kong-temp.yml /kong/declarative/kong.yml"
+
+# 4️⃣ Kong neu laden
+docker exec $CONTAINER_NAME kong reload
+
+# 5️⃣ Health-Check testen
 curl https://api.baucircle-beratung.de/kaltakquise/health
