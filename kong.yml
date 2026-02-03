@@ -1,8 +1,8 @@
+cat > /tmp/kong-new.yml << 'EOF'
 _format_version: "3.0"
 _transform: true
 
 services:
-  # PostgREST Service - REST API für Postgres
   - name: postgrest-service
     url: http://rest-sowwgwwc84coccwcwokwk8ss:3000
     routes:
@@ -12,7 +12,6 @@ services:
         strip_path: true
         preserve_host: false
 
-  # GoTrue Service - Auth/User Management
   - name: gotrue-service
     url: http://auth-sowwgwwc84coccwcwokwk8ss:8081
     routes:
@@ -22,7 +21,6 @@ services:
         strip_path: true
         preserve_host: false
 
-  # Storage Service - File Storage
   - name: storage-service
     url: http://storage-sowwgwwc84coccwcwokwk8ss:5000
     routes:
@@ -32,7 +30,6 @@ services:
         strip_path: false
         preserve_host: false
 
-  # Content Backend Service - Content Marketing API
   - name: content-backend-service
     url: http://content-backend-i0g04gcg04ow04wo0s4s4cwc-093942896242:3200
     routes:
@@ -42,7 +39,6 @@ services:
         strip_path: true
         preserve_host: false
 
-  # Kaltakquise Backend Service - Lead Management & Outbound
   - name: kaltakquise-backend-service
     url: http://kaltakquise-backend-c80448wcs0ssgwso0wokw000-214920375559:3350
     routes:
@@ -52,7 +48,6 @@ services:
         strip_path: true
         preserve_host: false
 
-# Global CORS Plugin
 plugins:
   - name: cors
     config:
@@ -91,3 +86,4 @@ plugins:
         - OPTIONS
       max_age: 3600
       preflight_continue: false
+EOF
