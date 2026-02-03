@@ -34,7 +34,7 @@ services:
 
   # Content Backend Service - Content Marketing API
   - name: content-backend-service
-    url: http://content-backend-i0g04gcg04ow04wo0s4s4cwc-221047574993:3200
+    url: http://content-backend-i0g04gcg04ow04wo0s4s4cwc-093942896242:3200
     routes:
       - name: content-backend-route
         paths:
