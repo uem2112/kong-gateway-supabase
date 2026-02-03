@@ -42,6 +42,16 @@ services:
         strip_path: true
         preserve_host: false
 
+  # Kaltakquise Backend Service - Lead Management & Outbound
+  - name: kaltakquise-backend-service
+    url: http://kaltakquise-backend:3350
+    routes:
+      - name: kaltakquise-backend-route
+        paths:
+          - /kaltakquise
+        strip_path: true
+        preserve_host: false
+
 # Global CORS Plugin
 plugins:
   - name: cors
@@ -50,6 +60,8 @@ plugins:
         - "https://baucircle-beratung.de"
         - "https://app.baucircle-beratung.de"
         - "https://api.baucircle-beratung.de"
+        - "https://kaltakquise.baucircle-beratung.de"
+        - "https://crm.planex-group.de"
         - "http://localhost:3000"
         - "http://localhost:5173"
       credentials: true
