@@ -91,16 +91,17 @@ plugins:
       preflight_continue: false
 EOF
 
-# 2️⃣ Config in Container kopieren (neuen Kong-Containernamen anpassen)
+# 2️⃣ Containername setzen
 CONTAINER_NAME="kong-gateway-xwso8w0og4o84088ssgwo8ww-231100618600"
 
+# 3️⃣ Config in Container kopieren
 docker cp /tmp/kong-new.yml $CONTAINER_NAME:/kong/declarative/kong-temp.yml
 
-# 3️⃣ In Container verschieben und ersetzen
+# 4️⃣ Alte Config ersetzen
 docker exec -it $CONTAINER_NAME bash -c "mv /kong/declarative/kong-temp.yml /kong/declarative/kong.yml"
 
-# 4️⃣ Kong neu laden
+# 5️⃣ Kong reload
 docker exec $CONTAINER_NAME kong reload
 
-# 5️⃣ Health-Check testen
+# 6️⃣ Testen
 curl https://api.baucircle-beratung.de/kaltakquise/health
