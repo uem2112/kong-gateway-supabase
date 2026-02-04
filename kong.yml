@@ -7,7 +7,7 @@ services:
     routes:
       - name: postgrest-route
         paths:
-          - ~^/rest/v1
+          - /rest/v1
         strip_path: true
         preserve_host: false
 
@@ -16,7 +16,7 @@ services:
     routes:
       - name: gotrue-route
         paths:
-          - ~^/auth/v1
+          - /auth/v1
         strip_path: true
         preserve_host: false
 
@@ -25,25 +25,16 @@ services:
     routes:
       - name: storage-route
         paths:
-          - ~^/storage/v1
+          - /storage/v1
         strip_path: false
         preserve_host: false
 
-  - name: content-backend-service
-    url: http://content-backend-i0g04gcg04ow04wo0s4s4cwc-093942896242:3200
-    routes:
-      - name: content-backend-route
-        paths:
-          - ~^/content
-        strip_path: true
-        preserve_host: false
-
   - name: kaltakquise-backend-service
-    url: http://kaltakquise-backend-c80448wcs0ssgwso0wokw000:3350
+    url: http://kaltakquise-backend:3350
     routes:
       - name: kaltakquise-backend-route
         paths:
-          - ~^/kaltakquise
+          - /kaltakquise
         strip_path: true
         preserve_host: false
 
