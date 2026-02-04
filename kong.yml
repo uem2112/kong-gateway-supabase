@@ -1,39 +1,51 @@
-cat > /tmp/kong-new.yml << 'EOF'
 _format_version: "3.0"
 _transform: true
 
 services:
-  - name: postgrest
+  - name: postgrest-service
     url: http://rest-sowwgwwc84coccwcwokwk8ss:3000
     routes:
-      - name: postgrest
+      - name: postgrest-route
         paths:
-          - /rest/v1
+          - ~^/rest/v1
         strip_path: true
+        preserve_host: false
 
-  - name: auth
+  - name: gotrue-service
     url: http://auth-sowwgwwc84coccwcwokwk8ss:8081
     routes:
-      - name: auth
+      - name: gotrue-route
         paths:
-          - /auth/v1
+          - ~^/auth/v1
         strip_path: true
+        preserve_host: false
 
-  - name: storage
+  - name: storage-service
     url: http://storage-sowwgwwc84coccwcwokwk8ss:5000
     routes:
-      - name: storage
+      - name: storage-route
         paths:
-          - /storage/v1
+          - ~^/storage/v1
         strip_path: false
+        preserve_host: false
 
-  - name: kaltakquise
+  - name: content-backend-service
+    url: http://content-backend-i0g04gcg04ow04wo0s4s4cwc-093942896242:3200
+    routes:
+      - name: content-backend-route
+        paths:
+          - ~^/content
+        strip_path: true
+        preserve_host: false
+
+  - name: kaltakquise-backend-service
     url: http://kaltakquise-backend-c80448wcs0ssgwso0wokw000:3350
     routes:
-      - name: kaltakquise
+      - name: kaltakquise-backend-route
         paths:
-          - /kaltakquise
+          - ~^/kaltakquise
         strip_path: true
+        preserve_host: false
 
 plugins:
   - name: cors
@@ -42,9 +54,28 @@ plugins:
         - https://baucircle-beratung.de
         - https://app.baucircle-beratung.de
         - https://api.baucircle-beratung.de
+        - https://kaltakquise.baucircle-beratung.de
+        - https://crm.planex-group.de
         - http://localhost:3000
         - http://localhost:5173
       credentials: true
+      exposed_headers:
+        - X-Auth-Token
+        - Authorization
+        - Content-Type
+        - Content-Length
+        - Content-Range
+      headers:
+        - Accept
+        - Accept-Version
+        - Authorization
+        - Content-Length
+        - Content-MD5
+        - Content-Type
+        - Date
+        - X-Auth-Token
+        - apikey
+        - x-client-info
       methods:
         - GET
         - POST
@@ -52,4 +83,5 @@ plugins:
         - PATCH
         - DELETE
         - OPTIONS
-EOF
+      max_age: 3600
+      preflight_continue: false
