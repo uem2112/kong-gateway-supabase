@@ -2,7 +2,6 @@ _format_version: "3.0"
 _transform: true
 
 services:
-  # PostgREST Service - REST API für Postgres
   - name: postgrest-service
     url: http://rest-sowwgwwc84coccwcwokwk8ss:3000
     routes:
@@ -12,7 +11,6 @@ services:
         strip_path: true
         preserve_host: false
 
-  # GoTrue Service - Auth/User Management
   - name: gotrue-service
     url: http://auth-sowwgwwc84coccwcwokwk8ss:8081
     routes:
@@ -22,7 +20,6 @@ services:
         strip_path: true
         preserve_host: false
 
-  # Storage Service - File Storage
   - name: storage-service
     url: http://storage-sowwgwwc84coccwcwokwk8ss:5000
     routes:
@@ -32,15 +29,26 @@ services:
         strip_path: false
         preserve_host: false
 
-# Global CORS Plugin
+  - name: kaltakquise-backend-service
+    url: http://kaltakquise-backend:3350
+    routes:
+      - name: kaltakquise-backend-route
+        paths:
+          - /kaltakquise
+        strip_path: true
+        preserve_host: false
+
 plugins:
   - name: cors
     config:
       origins:
-        - "https://baucircle-beratung.de"
-        - "https://app.baucircle-beratung.de"
-        - "http://localhost:3000"
-        - "http://localhost:5173"
+        - https://baucircle-beratung.de
+        - https://app.baucircle-beratung.de
+        - https://api.baucircle-beratung.de
+        - https://kaltakquise.baucircle-beratung.de
+        - https://crm.planex-group.de
+        - http://localhost:3000
+        - http://localhost:5173
       credentials: true
       exposed_headers:
         - X-Auth-Token
