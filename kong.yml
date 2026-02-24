@@ -65,7 +65,7 @@ services:
 
 
 # ---------------------------
-# GLOBAL CORS
+# GLOBAL CORS PLUGIN
 # ---------------------------
 plugins:
   - name: cors
@@ -79,13 +79,17 @@ plugins:
         - https://sales-pipeline.baucircle-beratung.de
         - http://localhost:3000
         - http://localhost:5173
+
       credentials: true
-      exposed_headers:
-        - X-Auth-Token
-        - Authorization
-        - Content-Type
-        - Content-Length
-        - Content-Range
+
+      methods:
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+        - OPTIONS
+
       headers:
         - Accept
         - Accept-Version
@@ -97,12 +101,14 @@ plugins:
         - X-Auth-Token
         - apikey
         - x-client-info
-      methods:
-        - GET
-        - POST
-        - PUT
-        - PATCH
-        - DELETE
-        - OPTIONS
+        - x-company-profile-id   # ← WICHTIGER FIX
+
+      exposed_headers:
+        - X-Auth-Token
+        - Authorization
+        - Content-Type
+        - Content-Length
+        - Content-Range
+
       max_age: 3600
       preflight_continue: false
