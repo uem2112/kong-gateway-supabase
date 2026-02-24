@@ -103,7 +103,7 @@ plugins:
         - apikey
         - x-client-info
         - x-supabase-api-version
-        - x-company-profile-id   # 🔥 WICHTIG
+        - x-company-profile-id
 
       exposed_headers:
         - X-Auth-Token
