@@ -75,6 +75,7 @@ plugins:
         - https://app.baucircle-beratung.de
         - https://api.baucircle-beratung.de
         - https://kaltakquise.baucircle-beratung.de
+        - https://crm.planex-group.de
         - https://crm.baucircle-beratung.de
         - https://sales-pipeline.baucircle-beratung.de
         - http://localhost:3000
@@ -101,7 +102,8 @@ plugins:
         - X-Auth-Token
         - apikey
         - x-client-info
-        - x-company-profile-id   # ← WICHTIGER FIX
+        - x-supabase-api-version
+        - x-company-profile-id   # 🔥 WICHTIG
 
       exposed_headers:
         - X-Auth-Token
