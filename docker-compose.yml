@@ -24,9 +24,6 @@ services:
     volumes:
       - ./kong.yml:/kong/declarative/kong.yml:ro
 
-    # Networks - WICHTIG:
-    # 1) coolify => damit Traefik/Konfiguration von Coolify greift
-    # 2) sowwgwwc84coccwcwokwk8ss_default => damit Kong den Supabase "rest" Container per DNS findet
     networks:
       - coolify
       - sowwgwwc84coccwcwokwk8ss_default
@@ -35,13 +32,13 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=coolify"
 
-      # HTTP Router für API Gateway
-      - "traefik.http.routers.kong-gateway.rule=Host(`${GATEWAY_DOMAIN:-api.example.com}`)"
+      # 🔥 FIXED DOMAIN
+      - "traefik.http.routers.kong-gateway.rule=Host(`api.baucircle-beratung.de`)"
       - "traefik.http.routers.kong-gateway.entrypoints=http,https"
       - "traefik.http.routers.kong-gateway.tls=true"
       - "traefik.http.routers.kong-gateway.tls.certresolver=letsencrypt"
 
-      # Service (Port mapping zu Kong Proxy)
+      # Service → Kong Proxy Port
       - "traefik.http.services.kong-gateway.loadbalancer.server.port=8000"
 
     healthcheck:
@@ -54,5 +51,6 @@ services:
 networks:
   coolify:
     external: true
+
   sowwgwwc84coccwcwokwk8ss_default:
     external: true
