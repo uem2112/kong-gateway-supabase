@@ -78,6 +78,7 @@ plugins:
         - https://crm.planex-group.de
         - https://crm.baucircle-beratung.de
         - https://sales-pipeline.baucircle-beratung.de
+        - https://id-preview--188a9bf0-e541-4705-8eee-aa7f9686dac1.lovable.app
         - http://localhost:3000
         - http://localhost:5173
 
