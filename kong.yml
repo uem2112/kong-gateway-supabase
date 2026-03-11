@@ -1,8 +1,6 @@
 _format_version: "3.0"
 _transform: true
-
 services:
-
   # ---------------------------
   # SUPABASE – PostgREST
   # ---------------------------
@@ -14,7 +12,6 @@ services:
           - /rest/v1
         strip_path: true
         preserve_host: false
-
   # ---------------------------
   # SUPABASE – Auth (GoTrue)
   # ---------------------------
@@ -26,7 +23,6 @@ services:
           - /auth/v1
         strip_path: true
         preserve_host: false
-
   # ---------------------------
   # SUPABASE – Storage
   # ---------------------------
@@ -38,7 +34,6 @@ services:
           - /storage/v1
         strip_path: false
         preserve_host: false
-
   # ---------------------------
   # KALTAKQUISE BACKEND
   # ---------------------------
@@ -50,7 +45,6 @@ services:
           - /kaltakquise
         strip_path: true
         preserve_host: false
-
   # ---------------------------
   # SALES PIPELINE BACKEND
   # ---------------------------
@@ -62,8 +56,6 @@ services:
           - /sales
         strip_path: true
         preserve_host: false
-
-
 # ---------------------------
 # GLOBAL CORS PLUGIN
 # ---------------------------
@@ -81,9 +73,7 @@ plugins:
         - https://id-preview--188a9bf0-e541-4705-8eee-aa7f9686dac1.lovable.app
         - http://localhost:3000
         - http://localhost:5173
-
       credentials: true
-
       methods:
         - GET
         - POST
@@ -91,7 +81,6 @@ plugins:
         - PATCH
         - DELETE
         - OPTIONS
-
       headers:
         - Accept
         - Accept-Version
@@ -105,13 +94,13 @@ plugins:
         - x-client-info
         - x-supabase-api-version
         - x-company-profile-id
-
+        - accept-profile
+        - content-profile
       exposed_headers:
         - X-Auth-Token
         - Authorization
         - Content-Type
         - Content-Length
         - Content-Range
-
       max_age: 3600
       preflight_continue: false
