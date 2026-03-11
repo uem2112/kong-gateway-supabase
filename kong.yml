@@ -49,7 +49,7 @@ services:
   # SALES PIPELINE BACKEND
   # ---------------------------
   - name: sales-backend-service
-    url: http://backend-mwscgwsgss0kcgo84o0s4ckw-022254664887:3300
+    url: http://sales-pipeline-backend:3300
     routes:
       - name: sales-backend-route
         paths:
